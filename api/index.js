@@ -6,6 +6,7 @@ const fileRoutes = require('./routes/file');
 
 const app = express();
 const port = process.env.PORT || 5000;
+var server_host = process.env.YOUR_HOST || '0.0.0.0';
 
 // app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -26,12 +27,6 @@ app.use((req, res, next) => {
 
 app.use('/api/file', fileRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -39,7 +34,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port, server_host, () => {
       console.log(`Server is up on port ${port}!`);
     });
   });

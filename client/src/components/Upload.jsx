@@ -4,6 +4,8 @@ import { DropzoneDialog } from "material-ui-dropzone";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const URL = 'http://upload-centre.herokuapp.com'
+
 const useStyles = makeStyles({
   wrapper: {
     background: "linear-gradient(to bottom right, #ccc, #eee)",
@@ -40,7 +42,7 @@ const Upload = () => {
     const fd = new FormData();
     fd.append("file", file, file.name);
     axios
-      .post("http://localhost:5000/api/file/upload", fd)
+      .post(`${URL}/api/file/upload`, fd)
       .then(({ data }) => {
         setFileId(data);
         setFile(null);

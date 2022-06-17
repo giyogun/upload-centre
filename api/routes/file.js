@@ -18,7 +18,7 @@ let gfs;
 connection.once("open", () => {
   (gfs = new mongoose.mongo.GridFSBucket(connection.db)),
     {
-      bucketName: "uploads",
+      bucketName: "files",
     };
 });
 
@@ -34,7 +34,7 @@ const storage = new GridFsStorage({
         const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-          bucketName: "images",
+          bucketName: "files",
         };
         resolve(fileInfo);
       });
